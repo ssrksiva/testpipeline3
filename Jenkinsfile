@@ -22,7 +22,7 @@ pipeline {
         sh 'git config --global user.email "sssrkbsc@gmail.com"'
         sh 'git config --global credential.username ssrksiva'
         sh 'git config --global credential.helper !echo password=14Dec@1991; echo'
-        sh 'git checkout origin master'
+        sh 'git clone --single-branch --branch master https://github.com/ssrksiva/testpipeline3.git'
         sh 'git merge -s ours develop --allow-unrelated-histories'
         sh 'git merge -s ours develop --allow-unrelated-histories'
       }
