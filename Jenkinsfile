@@ -20,10 +20,11 @@ pipeline {
       steps {
         sh 'git config --global user.name "ssrksiva"'
         sh 'git config --global user.email "sssrkbsc@gmail.com"'
-        sh 'git merge -s ours develop --allow-unrelated-histories'
         sh 'git config --global credential.username ssrksiva'
         sh 'git config --global credential.helper !echo password=14Dec@1991; echo'
-        sh 'git push origin master --tags'
+        sh 'git checkout master'
+        sh 'git merge -s ours develop --allow-unrelated-histories'
+        sh 'git merge -s ours develop --allow-unrelated-histories'
       }
     }
 
