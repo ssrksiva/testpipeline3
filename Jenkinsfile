@@ -13,53 +13,6 @@ pipeline {
       }
     }
 
-    stage('Clean') {
-      steps {
-        sh 'chmod +x mvnw'
-        sh './mvnw -ntp clean -P-webpack'
-      }
-    }
-
-    stage('install tools') {
-      steps {
-        sh './mvnw -ntp com.github.eirslett:frontend-maven-plugin:install-node-and-npm -DnodeVersion=v10.16.0 -DnpmVersion=6.9.0'
-      }
-    }
-
-    stage('npm install') {
-      steps {
-        sh './mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm'
-      }
-    }
-
-    stage('backend test') {
-      steps {
-        sh './mvnw -ntp verify -P-webpack'
-      }
-    }
-
-    stage('front end') {
-      steps {
-        sh './mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments=\'run test\''
-      }
-    }
-
-    stage('packaging') {
-      steps {
-        sh './mvnw -ntp verify -P-webpack -Pprod -DskipTests'
-        archiveArtifacts(fingerprint: true, artifacts: '**/target/*.jar')
-      }
-    }
-
-    stage('Sonar') {
-      steps {
-        withSonarQubeEnv('My SonarQube Server') {
-          sh './mvnw -ntp sonar:sonar'
-        }
-
-      }
-    }
-
     stage('Deliver for development') {
       when {
         branch 'develop'
@@ -67,14 +20,12 @@ pipeline {
       steps {
         sh 'git config --global user.name "ssrksiva"'
         sh 'git config --global user.email "sssrkbsc@gmail.com"'
-        sh 'git tag -a tagName4 -m "test-admin4"'
+        sh 'git tag -a tagName5 -m "test-admin5"'
         sh 'git commit -am "Merged develop branch to master1"'
         sh 'git merge -s ours develop --allow-unrelated-histories'
         sh 'git config --global credential.username ssrksiva'
         sh 'git config --global credential.helper !echo password=14Dec@1991; echo'
-        sh 'git add --all'
-        sh 'git commit -m "test"'
-        sh 'git push origin master'
+        sh 'git push origin master --tags'
       }
     }
 
